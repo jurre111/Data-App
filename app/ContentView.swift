@@ -107,7 +107,7 @@ struct ChartView: View {
     }
 }
 
-strict AddChartView: View {
+struct AddChartView: View {
     var body: some View {
         VStack {
             Spacer()
