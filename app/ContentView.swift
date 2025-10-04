@@ -26,14 +26,24 @@ struct ContentView: View {
             VStack {
                 HStack {
                     Text(name)
+                        .frame(width: 100)
+                        .font(.headline)
                     Circle()
                         .fill(new ? .green : .gray)
-                        .frame(width: 20, height: 20)
+                        .frame(width: 10, height: 10)
                 }
                 ChartView(data: data, xName: xName, yName: yName)
                     .frame(height: 300)
+                    .padding()
             }
+            .padding(.bottom)
+            .background(
+                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                    .fill(.gray)
+            )
         }
+        .padding(.leading: 10, .trailing: 10, .top: 0, .bottom: 0)
+        .navigationTitle("Home")
     }
 }
 
@@ -51,6 +61,7 @@ struct ChartView: View {
                 )
             }
         }
+        .chartXScale(domain: data.map(\.year).min()!...data.map(\.year).max()!)
         .chartXAxisLabel(xName)
         .chartYAxisLabel(yName)
     }
