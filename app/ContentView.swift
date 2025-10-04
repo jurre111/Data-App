@@ -22,28 +22,31 @@ struct ContentView: View {
     var yName = "Violence"
 
     var body: some View {
-        ScrollView {
-            VStack {
-                HStack {
-                    Text(name)
-                        .frame(width: 100)
-                        .font(.headline)
-                    Circle()
-                        .fill(new ? .green : .gray)
-                        .frame(width: 10, height: 10)
+        NavigationStack {
+            ScrollView {
+                VStack(alignment: .leading) {
+                    HStack {
+                        Text(name)
+                            .frame(width: 200)
+                            .font(.headline)
+                        Spacer()
+                        Circle()
+                            .fill(new ? .green : .gray)
+                            .frame(width: 10, height: 10)
+                    }
+                    ChartView(data: data, xName: xName, yName: yName)
+                        .frame(height: 300)
+                        .padding()
                 }
-                ChartView(data: data, xName: xName, yName: yName)
-                    .frame(height: 300)
-                    .padding()
+                .padding(.bottom)
+                .background(
+                    RoundedRectangle(cornerRadius: 20, style: .continuous)
+                        .fill(Color(UIColor.secondarySystemBackground))
+                )
             }
-            .padding(.bottom)
-            .background(
-                RoundedRectangle(cornerRadius: 20, style: .continuous)
-                    .fill(.gray)
-            )
+            .padding(.leading, 20)
+            .padding(.trailing, 20)
         }
-        .padding(.leading, 10)
-        .padding(.trailing, 10)
         .navigationTitle("Home")
     }
 }
@@ -65,6 +68,15 @@ struct ChartView: View {
         .chartXScale(domain: data.map(\.year).min()!...data.map(\.year).max()!)
         .chartXAxisLabel(xName)
         .chartYAxisLabel(yName)
+    }
+}
+
+extension Color {
+    init(hex: Int, opacity: Double = 1.0) {
+        let red = Double((hex & 0xff0000) >> 16) / 255.0
+        let green = Double((hex & 0xff00) >> 8) / 255.0
+        let blue = Double((hex & 0xff) >> 0) / 255.0
+        self.init(.sRGB, red: red, green: green, blue: blue, opacity: opacity)
     }
 }
 
