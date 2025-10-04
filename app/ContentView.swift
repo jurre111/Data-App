@@ -98,7 +98,6 @@ struct ChartView: View {
                 )
             }
         }
-        .chartXScale(domain: data.map(\.year).min() ?? Date()...data.map(\.year).max() ?? Date())
         .chartXAxis {
             AxisMarks(values: .stride(by: .year)) { value in
                 AxisGridLine()
