@@ -5,6 +5,7 @@ import SwiftData
 
 @Model
 final class Charts {
+    @Attribute(.unique) var id: UUID = UUID()
     var name: String
     var xAxis: String
     var yAxis: String
