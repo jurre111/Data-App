@@ -11,7 +11,7 @@ final class Charts {
     var new: Bool
     var data: [ChartData]
 
-    init(name: String, xAxis: String, yAxis: String, new: Bool) {
+    init(name: String, xAxis: String, yAxis: String, new: Bool, data: [ChartData]) {
         self.name = name
         self.xAxis = xAxis
         self.yAxis = yAxis
