@@ -6,11 +6,11 @@ import SwiftData
 @Model
 final class Charts {
     var name: String
-    var axis: [String:String]
+    var axis: [String]
     var new: Bool
     var data: [ChartData]
 
-    init(name: String, axis: [String:String], new: Bool) {
+    init(name: String, axis: [String], new: Bool) {
         self.name = name
         self.axis = axis
         self.new = new
