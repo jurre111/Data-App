@@ -39,7 +39,7 @@ struct ContentView: View {
                         Spacer()
                     }
                 } else {
-                    ForEach(charts) { chart in
+                    ForEach(charts, id: \.id) { chart in
                         VStack(alignment: .leading) {
                             HStack {
                                 Text(chart.name)
@@ -63,8 +63,7 @@ struct ContentView: View {
                     }
                 }
             }
-            .padding(.leading, 20)
-            .padding(.trailing, 20)
+            .padding(.horizontal, 20)
             .navigationTitle("Home")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
