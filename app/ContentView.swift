@@ -41,7 +41,7 @@ struct ContentView: View {
                         Spacer()
                     }
                 } else {
-                    ForEach(charts, id: \.id) { chart in
+                    ForEach(charts) { chart in
                         VStack(alignment: .leading) {
                             HStack {
                                 Text(chart.name)
