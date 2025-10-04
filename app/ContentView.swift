@@ -8,14 +8,14 @@ struct ChartData: Identifiable {
 }
 
 struct ContentView: View {
-    let calendar = Calendar.current
     let data: [ChartData] = [
-        ChartData(year: calendar.date(from: DateComponents(year: 2021))!, value: 2.0),
-        ChartData(year: calendar.date(from: DateComponents(year: 2022))!, value: 2.3),
-        ChartData(year: calendar.date(from: DateComponents(year: 2023))!, value: 2.5),
-        ChartData(year: calendar.date(from: DateComponents(year: 2024))!, value: 2.2),
-        ChartData(year: calendar.date(from: DateComponents(year: 2025))!, value: 3.1)
+        ChartData(year: Calendar.current.date(from: DateComponents(year: 2021))!, value: 2.0),
+        ChartData(year: Calendar.current.date(from: DateComponents(year: 2022))!, value: 2.3),
+        ChartData(year: Calendar.current.date(from: DateComponents(year: 2023))!, value: 2.5),
+        ChartData(year: Calendar.current.date(from: DateComponents(year: 2024))!, value: 2.2),
+        ChartData(year: Calendar.current.date(from: DateComponents(year: 2025))!, value: 3.1)
     ]
+
     let name = "Amount of Gun Violence in USA in the last 5 Years"
     let new = true
     let xName = "Time"
