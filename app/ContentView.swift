@@ -2,19 +2,18 @@ import SwiftUI
 import Charts
 
 struct ChartData: Identifiable {
-    var year: Int
+    var year: Date
     var value: Double
     var id = UUID()
 }
 
 struct ContentView: View {
-    var data: [ChartData] = [
-        .init(year: 2021, value: 2.0),
-        .init(year: 2022, value: 2.3),
-        .init(year: 2023, value: 2.5),
-        .init(year: 2024, value: 2.2),
-        .init(year: 2025, value: 3.1)
-        
+    let data: [ChartData] = [
+        ChartData(year: calendar.date(from: DateComponents(year: 2021))!, value: 2.0),
+        ChartData(year: calendar.date(from: DateComponents(year: 2022))!, value: 2.3),
+        ChartData(year: calendar.date(from: DateComponents(year: 2023))!, value: 2.5),
+        ChartData(year: calendar.date(from: DateComponents(year: 2024))!, value: 2.2),
+        ChartData(year: calendar.date(from: DateComponents(year: 2025))!, value: 3.1)
     ]
     var name = "Amount of Gun Violence in USA in the last 5 Years"
     var new = true
@@ -67,8 +66,13 @@ struct ChartView: View {
             }
         }
         .chartXScale(domain: data.map(\.year).min()!...data.map(\.year).max()!)
-        .chartXAxisLabel(xName)
-        .chartYAxisLabel(yName)
+        .chartXAxis {
+            AxisMarks(values: .stride(by: .year)) { value in
+                AxisGridLine()
+                AxisTick()
+                AxisValueLabel(format: .dateTime.year()) // only show year
+            }
+        }
     }
 }
 
