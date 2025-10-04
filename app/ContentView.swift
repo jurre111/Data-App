@@ -42,7 +42,8 @@ struct ContentView: View {
                     .fill(.gray)
             )
         }
-        .padding(.leading: 10, .trailing: 10, .top: 0, .bottom: 0)
+        .padding(.leading, 10)
+        .padding(.trailing, 10)
         .navigationTitle("Home")
     }
 }
