@@ -6,13 +6,15 @@ import SwiftData
 @Model
 final class Charts {
     var name: String
-    var axis: [String]
+    var xAxis: String
+    var yAxis: String
     var new: Bool
     var data: [ChartData]
 
-    init(name: String, axis: [String], new: Bool) {
+    init(name: String, xAxis: String, yAxis: String, new: Bool) {
         self.name = name
-        self.axis = axis
+        self.xAxis = xAxis
+        self.yAxis = yAxis
         self.new = new
         self.data = data
     }
@@ -51,7 +53,7 @@ struct ContentView: View {
                                     .frame(width: 10, height: 10)
                             }
                             .padding()
-                            ChartView(data: chart.data, xName: chart.axis[0], yName: chart.axis[1])
+                            ChartView(data: chart.data, xName: chart.xAxis, yName: chart.yAxis)
                                 .frame(height: 300)
                                 .padding()
                         }
