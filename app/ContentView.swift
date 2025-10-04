@@ -1,5 +1,23 @@
 import SwiftUI
 import Charts
+import SwiftData
+
+
+@Model
+final class Charts {
+    var name: String
+    var axis: [String:String]
+    var new: Bool
+    var data: [ChartData]
+
+    init(name: String, axis: [String:String], new: Bool) {
+        self.name = name
+        self.axis = axis
+        self.new = new
+        self.data = data
+    }
+}
+
 
 struct ChartData: Identifiable {
     var year: Date
@@ -8,46 +26,58 @@ struct ChartData: Identifiable {
 }
 
 struct ContentView: View {
-    let data: [ChartData] = [
-        ChartData(year: Calendar.current.date(from: DateComponents(year: 2021))!, value: 2.0),
-        ChartData(year: Calendar.current.date(from: DateComponents(year: 2022))!, value: 2.3),
-        ChartData(year: Calendar.current.date(from: DateComponents(year: 2023))!, value: 2.5),
-        ChartData(year: Calendar.current.date(from: DateComponents(year: 2024))!, value: 2.2),
-        ChartData(year: Calendar.current.date(from: DateComponents(year: 2025))!, value: 3.1)
-    ]
-
-    let name = "Amount of Gun Violence in USA in the last 5 Years"
-    let new = true
-    let xName = "Time"
-    let yName = "Violence"
+    @Query var charts: [Charts]
+    @State private var showingAddChartView = false
 
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(alignment: .leading) {
-                    HStack {
-                        Text(name)
-                            .frame(width: 200)
-                            .font(.headline)
+                if charts.isEmpty {
+                    VStack {
                         Spacer()
-                        Circle()
-                            .fill(new ? .green : .gray)
-                            .frame(width: 10, height: 10)
+                        Text("No charts available. Please add a chart.")
+                        Spacer()
                     }
-                    .padding()
-                    ChartView(data: data, xName: xName, yName: yName)
-                        .frame(height: 300)
-                        .padding()
+                } else {
+                    ForEach(charts) { chart in
+                        VStack(alignment: .leading) {
+                            HStack {
+                                Text(chart.name)
+                                    .frame(width: 200)
+                                    .font(.headline)
+                                Spacer()
+                                Circle()
+                                    .fill(chart.new ? .green : .gray)
+                                    .frame(width: 10, height: 10)
+                            }
+                            .padding()
+                            ChartView(data: chart.data, xName: chart.axis[0], yName: chart.axis[1])
+                                .frame(height: 300)
+                                .padding()
+                        }
+                        .padding(.bottom)
+                        .background(
+                            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                                .fill(Color(UIColor.secondarySystemBackground))
+                        )
+                    }
                 }
-                .padding(.bottom)
-                .background(
-                    RoundedRectangle(cornerRadius: 20, style: .continuous)
-                        .fill(Color(UIColor.secondarySystemBackground))
-                )
             }
             .padding(.leading, 20)
             .padding(.trailing, 20)
             .navigationTitle("Home")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        showingAddChartView = true
+                    }) {
+                        Image(systemName: "plus")
+                    }
+                }
+            }
+        }
+        .fullScreenCover(isPresented: $showingAddChartView) {
+            AddChartView()
         }
     }
 }
@@ -73,6 +103,16 @@ struct ChartView: View {
                 AxisTick()
                 AxisValueLabel(format: .dateTime.year()) // only show year
             }
+        }
+    }
+}
+
+strict AddChartView: View {
+    var body: some View {
+        VStack {
+            Spacer()
+            Text("Add Chart View")
+            Spacer()
         }
     }
 }
