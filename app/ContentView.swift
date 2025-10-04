@@ -34,6 +34,7 @@ struct ContentView: View {
                             .fill(new ? .green : .gray)
                             .frame(width: 10, height: 10)
                     }
+                    .padding()
                     ChartView(data: data, xName: xName, yName: yName)
                         .frame(height: 300)
                         .padding()
@@ -46,8 +47,8 @@ struct ContentView: View {
             }
             .padding(.leading, 20)
             .padding(.trailing, 20)
+            .navigationTitle("Home")
         }
-        .navigationTitle("Home")
     }
 }
 
