@@ -10,9 +10,9 @@ final class ChartModel {
     var xAxis: String
     var yAxis: String
     var new: Bool
-    var data: [ChartData]
+    @Relationship(deleteRule: .cascade) var data: [ChartDataModel]
 
-    init(name: String, xAxis: String, yAxis: String, new: Bool, data: [ChartData]) {
+    init(name: String, xAxis: String, yAxis: String, new: Bool, data: [ChartDataModel]) {
         self.name = name
         self.xAxis = xAxis
         self.yAxis = yAxis
@@ -22,10 +22,16 @@ final class ChartModel {
 }
 
 
-struct ChartData: Identifiable {
+@Model
+final class ChartDataModel {
+    @Attribute(.unique) var id: UUID = UUID()
     var year: Date
     var value: Double
-    var id = UUID()
+    
+    init(year: Date, value: Double) {
+        self.year = year
+        self.value = value
+    }
 }
 
 struct ContentView: View {
@@ -85,7 +91,7 @@ struct ContentView: View {
 }
 
 struct ChartView: View {
-    var data: [ChartData]
+    var data: [ChartDataModel]
     var xName: String
     var yName: String
 
