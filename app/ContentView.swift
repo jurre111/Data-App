@@ -150,7 +150,13 @@ struct AddChartView: View {
                     }
                 }
                 Button(action: {
-                    data.append()
+                    var date = Date()
+                    for dataPoinit in data {
+                        if dataPoinit.year > date {
+                            date = dataPoinit.year
+                        }
+                    }
+                    data.append(years: date.addingTimeInterval(24*60*60), value: 0)
                 }) {
                     Label("Add Data Point", systemImage: "plus.circle.fill")
                 }
