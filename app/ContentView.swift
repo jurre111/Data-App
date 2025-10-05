@@ -136,7 +136,7 @@ struct AddChartView: View {
                         TextField("X-Axis Name", text: $xAxisName)
                         TextField("Y-Axis Name", text: $yAxisName)
                     }
-                    ForEach(data) { point in
+                    ForEach($data) { $point in
                         Section(header: Text("Data Point")) {
                             DatePicker("Year", selection: $point.year, displayedComponents: .date)
                             TextField("Value", value: $point.value, format: .number)
