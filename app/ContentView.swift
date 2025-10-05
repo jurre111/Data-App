@@ -130,8 +130,8 @@ struct ChartView: View {
             }
         }
         .chartXAxis {
-            AxisMarks(values: .stride(by: .year)) { value in
-                AxisValueLabel(format: .dateTime.month()) // only show year
+            AxisMarks(values: .stride(by: .date)) { value in
+                AxisValueLabel(format: .dateTime.day().month().year()) // only show year
             }
         }
     }
