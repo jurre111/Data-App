@@ -102,7 +102,7 @@ struct ContentView: View {
 }
 
 struct ChartView: View {
-    var data: [AddChartData] = []
+    var data: [ChartDataModel] = []
     var xName: String = "X-axis"
     var yName: String = "Y-axis"
 
