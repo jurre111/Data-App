@@ -132,9 +132,9 @@ struct AddChartView: View {
             ScrollView {
                 Form {
                     Section(header: Text("Chart Details")) {
-                        TextField("Chart Name", text: chartName)
-                        TextField("X-Axis Name", text: xAxisName)
-                        TextField("Y-Axis Name", text: yAxisName)
+                        TextField("Chart Name", text: $chartName)
+                        TextField("X-Axis Name", text: $xAxisName)
+                        TextField("Y-Axis Name", text: $yAxisName)
                     }
                     ForEach(data) { point in
                         Section(header: Text("Data Point")) {
