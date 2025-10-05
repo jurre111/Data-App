@@ -169,7 +169,6 @@ struct AddChartView: View {
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Save") {
-                        let 
                         showingAddChartView.toggle()
                     }
                 }
