@@ -129,27 +129,25 @@ struct AddChartView: View {
 
     var body: some View {
         NavigationStack {
-            ScrollView {
-                Form {
-                    Section(header: Text("Chart Details")) {
-                        TextField("Chart Name", text: $chartName)
-                        TextField("X-Axis Name", text: $xAxisName)
-                        TextField("Y-Axis Name", text: $yAxisName)
-                    }
-                    ForEach($data) { $point in
-                        Section(header: Text("Data Point")) {
-                            DatePicker("Year", selection: $point.year, displayedComponents: .date)
-                            TextField("Value", value: $point.value, format: .number)
-                                .keyboardType(.decimalPad)
-                        }
-                    }
-                    Button(action: {
-                        data.append(AddChartData(year: Date(), value: 0.0))
-                    }) {
-                        Label("Add Data Point", systemImage: "plus.circle.fill")
+            Form {
+                Section(header: Text("Chart Details")) {
+                    TextField("Chart Name", text: $chartName)
+                    TextField("X-Axis Name", text: $xAxisName)
+                    TextField("Y-Axis Name", text: $yAxisName)
+                }
+                ForEach($data) { $point in
+                    Section(header: Text("Data Point")) {
+                        DatePicker("Year", selection: $point.year, displayedComponents: .date)
+                        TextField("Value", value: $point.value, format: .number)
+                            .keyboardType(.decimalPad)
                     }
                 }
-                Spacer()
+                Button(action: {
+                    data.append(AddChartData(year: Date(), value: 0.0))
+                }) {
+                    Label("Add Data Point", systemImage: "plus.circle.fill")
+                }
+            }
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
