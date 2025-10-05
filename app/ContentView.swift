@@ -66,6 +66,9 @@ struct ContentView: View {
                                     .frame(width: 200)
                                     .font(.headline)
                                 Spacer()
+                                Text(chart.added, format: .dateTime.year().month().day())
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
                             }
                             .padding()
                             ChartView(data: chart.data, xName: chart.xAxis, yName: chart.yAxis)
