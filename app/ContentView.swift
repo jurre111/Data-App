@@ -143,7 +143,7 @@ struct AddChartView: View {
                     }
                 }
                 Button(action: {
-                    data.append(AddChartData(year: Date(), value: 0.0))
+                    data.append(ChartDataModel(year: Date(), value: 0.0))
                 }) {
                     Label("Add Data Point", systemImage: "plus.circle.fill")
                 }
