@@ -83,14 +83,14 @@ struct ContentView: View {
                                 .fill(Color(UIColor.secondarySystemBackground))
                         )
                         .contextMenu {
-                            Button {
+                            Button(action: {
                                 modelContext.delete(chart)
-                            } {
+                            }) {
                                 Label("Delete", systemImage: "trash")
                             }
-                            Button {
+                            Button(action: {
 
-                            } {
+                            }) {
                                 Label("Edit", systemImage: "pencil")
                             }
                             
