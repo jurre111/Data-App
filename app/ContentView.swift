@@ -124,7 +124,7 @@ struct AddChartView: View {
     @State private var chartName: String = "Name"
     @State private var xAxisName: String = "X-axis Name"
     @State private var yAxisName: String = "Y-axis Name"
-    @State private var data: [ChartDataModel] = []
+    @StateObject private var data: [ChartDataModel] = []
     @Binding var showingAddChartView: Bool
 
     var body: some View {
