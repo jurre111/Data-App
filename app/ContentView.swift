@@ -97,9 +97,9 @@ struct ContentView: View {
 }
 
 struct ChartView: View {
-    var data: [AddChartData]
-    var xName: String
-    var yName: String
+    var data: [AddChartData] = []
+    var xName: String = "X-axis"
+    var yName: String = "Y-axis"
 
     var body: some View {
         Chart {
