@@ -126,16 +126,16 @@ struct ChartView: View {
 }
 
 struct AddChartView: View {
-    @State private var chartName: String = "Name"
-    @State private var xAxisName: String = "X-axis Name"
-    @State private var yAxisName: String = "Y-axis Name"
-    @State private var data: [AddChartData] = []
+    @State private var chartName: String = ""
+    @State private var xAxisName: String = ""
+    @State private var yAxisName: String = ""
+    @State private var data: ChartDataModel?
     @Binding var showingAddChartView: Bool
 
     var body: some View {
         NavigationStack {
             Form {
-                Section(header: Text("Chart Details")) {
+                Section("Chart Details") {
                     TextField("Chart Name", text: $chartName)
                     TextField("X-Axis Name", text: $xAxisName)
                     TextField("Y-Axis Name", text: $yAxisName)
@@ -148,7 +148,7 @@ struct AddChartView: View {
                     }
                 }
                 Button(action: {
-                    data.append(AddChartData(year: Date(), value: 0.0))
+                    data.append()
                 }) {
                     Label("Add Data Point", systemImage: "plus.circle.fill")
                 }
@@ -169,7 +169,7 @@ struct AddChartView: View {
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Save") {
-                        // save action
+                        let 
                         showingAddChartView.toggle()
                     }
                 }
