@@ -10,6 +10,7 @@ final class ChartModel {
     var xAxis: String
     var yAxis: String
     var new: Bool
+    var added: Date = Date()
     @Relationship(deleteRule: .cascade) var data: [ChartDataModel]
 
     init(name: String, xAxis: String, yAxis: String, new: Bool, data: [ChartDataModel]) {
@@ -129,8 +130,9 @@ struct AddChartView: View {
     @State private var chartName: String = ""
     @State private var xAxisName: String = ""
     @State private var yAxisName: String = ""
-    @State private var data: ChartDataModel?
+    @State private var data: [AddChartData] = []
     @Binding var showingAddChartView: Bool
+    @Environment(\.modelContext) private var modelContext
 
     var body: some View {
         NavigationStack {
@@ -142,7 +144,7 @@ struct AddChartView: View {
                 }
                 ForEach($data) { $point in
                     Section(header: Text("Data Point")) {
-                        DatePicker("Year", selection: $point.year, displayedComponents: .date)
+                        DatePicker("Date", selection: $point.year, displayedComponents: .date)
                         TextField("Value", value: $point.value, format: .number)
                             .keyboardType(.decimalPad)
                     }
@@ -169,6 +171,9 @@ struct AddChartView: View {
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Save") {
+                        let formattedDate = data.map { ChartDataModel(year: $0.year, value: $0.value) }
+                        let newChart = ChartModel(name: chartName, xAxis: xAxisName, yAxis: yAxisName, new: true, data: formattedDate)
+                        modelContext.insert(newChart)
                         showingAddChartView.toggle()
                     }
                 }
