@@ -156,7 +156,7 @@ struct AddChartView: View {
                             date = dataPoinit.year
                         }
                     }
-                    data.append(years: date.addingTimeInterval(24*60*60), value: 0)
+                    data.append(AddChartData(year: date.addingTimeInterval(24*60*60), value: 0))
                 }) {
                     Label("Add Data Point", systemImage: "plus.circle.fill")
                 }
