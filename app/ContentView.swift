@@ -34,11 +34,16 @@ final class ChartDataModel {
     }
 }
 
-struct AddChartData: Identifiable {
-    var year: Date
-    var value: Double
+class AddChartData: ObservableObject, Identifiable {
+    @Published var year: Date
+    @Published var value: Double
     var id = UUID()
+    init(year: Date, value: Double) {
+        self.year = year
+        self.value = value
+    }
 }
+
 
 struct ContentView: View {
     @Query var charts: [ChartModel]
@@ -97,7 +102,7 @@ struct ContentView: View {
 }
 
 struct ChartView: View {
-    var data: [ChartDataModel] = []
+    var data: [AddChartData] = []
     var xName: String = "X-axis"
     var yName: String = "Y-axis"
 
@@ -124,7 +129,7 @@ struct AddChartView: View {
     @State private var chartName: String = "Name"
     @State private var xAxisName: String = "X-axis Name"
     @State private var yAxisName: String = "Y-axis Name"
-    @StateObject private var data: [ChartDataModel] = []
+    @State private var data: [AddChartData] = []
     @Binding var showingAddChartView: Bool
 
     var body: some View {
@@ -143,7 +148,7 @@ struct AddChartView: View {
                     }
                 }
                 Button(action: {
-                    data.append(ChartDataModel(year: Date(), value: 0.0))
+                    data.append(AddChartData(year: Date(), value: 0.0))
                 }) {
                     Label("Add Data Point", systemImage: "plus.circle.fill")
                 }
