@@ -57,6 +57,17 @@ struct ContentView: View {
                     Text("No charts available. Please add a chart.")
                     Spacer()
                 }
+                .padding(.horizontal, 20)
+                .navigationTitle("Home")
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(action: {
+                            showingAddChartView.toggle()
+                        }) {
+                            Image(systemName: "plus")
+                        }
+                    }
+                }
             } else {
                 ScrollView {
                     ForEach(charts) { chart in
@@ -96,18 +107,19 @@ struct ContentView: View {
                         }
                     }
                 }
-            }
-            .padding(.horizontal, 20)
-            .navigationTitle("Home")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        showingAddChartView.toggle()
-                    }) {
-                        Image(systemName: "plus")
+                .padding(.horizontal, 20)
+                .navigationTitle("Home")
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(action: {
+                            showingAddChartView.toggle()
+                        }) {
+                            Image(systemName: "plus")
+                        }
                     }
                 }
             }
+
         }
         .sheet(isPresented: $showingAddChartView) {
             AddChartView(showingAddChartView: $showingAddChartView)
