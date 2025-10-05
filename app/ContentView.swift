@@ -77,14 +77,14 @@ struct ContentView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
-                        showingAddChartView = true
+                        showingAddChartView.toggle()
                     }) {
                         Image(systemName: "plus")
                     }
                 }
             }
         }
-        .fullScreenCover(isPresented: $showingAddChartView) {
+        .sheet(isPresented: $showingAddChartView) {
             AddChartView()
         }
     }
