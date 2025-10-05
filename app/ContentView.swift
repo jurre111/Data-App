@@ -61,7 +61,7 @@ struct ContentView: View {
                 } else {
                     ScrollView {
                         ForEach(charts) { chart in
-                            VStack(alignment: .leading) {
+                            VStack() {
                                 HStack {
                                     Text(chart.name)
                                         .frame(width: 200)
@@ -76,7 +76,7 @@ struct ContentView: View {
                                     .frame(height: 300)
                                     .padding()
                             }
-                            .padding(.bottom)
+                            .padding(.bottom, 20)
                             .background(
                                 RoundedRectangle(cornerRadius: 20, style: .continuous)
                                     .fill(Color(UIColor.secondarySystemBackground))
@@ -209,6 +209,8 @@ struct AddChartView: View {
                         modelContext.insert(newChart)
                         showingAddChartView.toggle()
                     }
+                    .disabled(chartName.isEmpty || data.isEmpty)
+                    .foregroundColor(chartName.isEmpty || data.isEmpty ? .gray : .blue)
                 }
             }
         }
