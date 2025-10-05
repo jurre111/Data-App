@@ -49,6 +49,7 @@ class AddChartData: ObservableObject, Identifiable {
 struct ContentView: View {
     @Query var charts: [ChartModel]
     @State private var showingAddChartView = false
+    @Environment(\.modelContext) private var modelContext
 
     var body: some View {
         NavigationStack {
@@ -81,6 +82,19 @@ struct ContentView: View {
                             RoundedRectangle(cornerRadius: 20, style: .continuous)
                                 .fill(Color(UIColor.secondarySystemBackground))
                         )
+                        .contextMenu {
+                            Button {
+                                modelContext.delete(chart)
+                            } {
+                                Label("Delete", systemImage: "trash")
+                            }
+                            Button {
+
+                            } {
+                                Label("Edit", systemImage: "pencil")
+                            }
+                            
+                        }
                     }
                 }
             }
