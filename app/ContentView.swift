@@ -138,8 +138,8 @@ struct AddChartView: View {
                     }
                     ForEach(data) { point in
                         Section(header: Text("Data Point")) {
-                            DatePicker("Year", selection: .constant(point.year), displayedComponents: .date)
-                            TextField("Value", value: .constant(point.value), format: .number)
+                            DatePicker("Year", selection: $point.year, displayedComponents: .date)
+                            TextField("Value", value: $point.value, format: .number)
                                 .keyboardType(.decimalPad)
                         }
                     }
