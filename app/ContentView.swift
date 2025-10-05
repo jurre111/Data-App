@@ -9,15 +9,13 @@ final class ChartModel {
     var name: String
     var xAxis: String
     var yAxis: String
-    var new: Bool
     var added: Date = Date()
     @Relationship(deleteRule: .cascade) var data: [ChartDataModel]
 
-    init(name: String, xAxis: String, yAxis: String, new: Bool, data: [ChartDataModel]) {
+    init(name: String, xAxis: String, yAxis: String, data: [ChartDataModel]) {
         self.name = name
         self.xAxis = xAxis
         self.yAxis = yAxis
-        self.new = new
         self.data = data
     }
 }
@@ -68,9 +66,6 @@ struct ContentView: View {
                                     .frame(width: 200)
                                     .font(.headline)
                                 Spacer()
-                                Circle()
-                                    .fill(chart.new ? .green : .gray)
-                                    .frame(width: 10, height: 10)
                             }
                             .padding()
                             ChartView(data: chart.data, xName: chart.xAxis, yName: chart.yAxis)
@@ -87,6 +82,7 @@ struct ContentView: View {
                                 modelContext.delete(chart)
                             }) {
                                 Label("Delete", systemImage: "trash")
+                                    .foregroundColor(.red)
                             }
                             Button(action: {
 
@@ -132,9 +128,7 @@ struct ChartView: View {
         }
         .chartXAxis {
             AxisMarks(values: .stride(by: .year)) { value in
-                AxisGridLine()
-                AxisTick()
-                AxisValueLabel(format: .dateTime.year()) // only show year
+                AxisValueLabel(format: .dateTime.month()) // only show year
             }
         }
     }
@@ -192,7 +186,7 @@ struct AddChartView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Save") {
                         let formattedDate = data.map { ChartDataModel(year: $0.year, value: $0.value) }
-                        let newChart = ChartModel(name: chartName, xAxis: xAxisName, yAxis: yAxisName, new: true, data: formattedDate)
+                        let newChart = ChartModel(name: chartName, xAxis: xAxisName, yAxis: yAxisName, data: formattedDate)
                         modelContext.insert(newChart)
                         showingAddChartView.toggle()
                     }
