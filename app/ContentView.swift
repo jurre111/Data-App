@@ -51,75 +51,77 @@ struct ContentView: View {
 
     var body: some View {
         NavigationStack {
-            if charts.isEmpty {
-                VStack {
-                    Spacer()
-                    Text("No charts available. Please add a chart.")
-                    Spacer()
-                }
-                .padding(.horizontal, 20)
-                .navigationTitle("Home")
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button(action: {
-                            showingAddChartView.toggle()
-                        }) {
-                            Image(systemName: "plus")
-                        }
+            ZStack {
+                if charts.isEmpty {
+                    VStack {
+                        Spacer()
+                        Text("No charts available. Please add a chart.")
+                        Spacer()
                     }
-                }
-            } else {
-                ScrollView {
-                    ForEach(charts) { chart in
-                        VStack(alignment: .leading) {
-                            HStack {
-                                Text(chart.name)
-                                    .frame(width: 200)
-                                    .font(.headline)
-                                Spacer()
-                                Text(chart.added, format: .dateTime.year().month().day())
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
-                            }
-                            .padding()
-                            ChartView(data: chart.data, xName: chart.xAxis, yName: chart.yAxis)
-                                .frame(height: 300)
+                } else {
+                    ScrollView {
+                        ForEach(charts) { chart in
+                            VStack(alignment: .leading) {
+                                HStack {
+                                    Text(chart.name)
+                                        .frame(width: 200)
+                                        .font(.headline)
+                                    Spacer()
+                                    Text(chart.added, format: .dateTime.year().month().day())
+                                        .font(.caption)
+                                        .foregroundColor(.secondary)
+                                }
                                 .padding()
-                        }
-                        .padding(.bottom)
-                        .background(
-                            RoundedRectangle(cornerRadius: 20, style: .continuous)
-                                .fill(Color(UIColor.secondarySystemBackground))
-                        )
-                        .contextMenu {
-                            Button(action: {
-                                modelContext.delete(chart)
-                            }) {
-                                Label("Delete", systemImage: "trash")
-                                    .foregroundColor(.red)
+                                ChartView(data: chart.data, xName: chart.xAxis, yName: chart.yAxis)
+                                    .frame(height: 300)
+                                    .padding()
                             }
-                            Button(action: {
+                            .padding(.bottom)
+                            .background(
+                                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                                    .fill(Color(UIColor.secondarySystemBackground))
+                            )
+                            .contextMenu {
+                                Button(action: {
+                                    modelContext.delete(chart)
+                                }) {
+                                    Label("Delete", systemImage: "trash")
+                                        .foregroundColor(.red)
+                                }
+                                Button(action: {
 
-                            }) {
-                                Label("Edit", systemImage: "pencil")
+                                }) {
+                                    Label("Edit", systemImage: "pencil")
+                                }
+                                
                             }
-                            
-                        }
-                    }
-                }
-                .padding(.horizontal, 20)
-                .navigationTitle("Home")
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button(action: {
-                            showingAddChartView.toggle()
-                        }) {
-                            Image(systemName: "plus")
                         }
                     }
                 }
             }
-
+            .padding(.horizontal, 20)
+            .navigationTitle("Home")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        showingAddChartView.toggle()
+                    }) {
+                        Image(systemName: "plus")
+                    }
+                    .contextMenu {
+                        Button(action: {
+                            showingAddChartView.toggle()
+                        }) {
+                            Label("Add Chart", systemImage: "plus")
+                        }
+                        Button(action: {
+                            showingAddChartView.toggle()
+                        }) {
+                            Label("Import from...", systemImage: "plus")
+                        }
+                    }
+                }
+            }
         }
         .sheet(isPresented: $showingAddChartView) {
             AddChartView(showingAddChartView: $showingAddChartView)
@@ -139,6 +141,13 @@ struct ChartView: View {
                     x: .value(xName, point.year),
                     y: .value(yName, point.value)
                 )
+            }
+        }
+        .chartXAxis {
+            AxisMarks(values: .automatic(desiredCount: 5)) { value in
+                AxisGridLine()
+                AxisTick()
+                AxisValueLabel(format: .dateTime)
             }
         }
     }
