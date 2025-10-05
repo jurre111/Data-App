@@ -51,14 +51,14 @@ struct ContentView: View {
 
     var body: some View {
         NavigationStack {
-            ScrollView {
-                if charts.isEmpty {
-                    VStack {
-                        Spacer()
-                        Text("No charts available. Please add a chart.")
-                        Spacer()
-                    }
-                } else {
+            if charts.isEmpty {
+                VStack {
+                    Spacer()
+                    Text("No charts available. Please add a chart.")
+                    Spacer()
+                }
+            } else {
+                ScrollView {
                     ForEach(charts) { chart in
                         VStack(alignment: .leading) {
                             HStack {
@@ -127,11 +127,6 @@ struct ChartView: View {
                     x: .value(xName, point.year),
                     y: .value(yName, point.value)
                 )
-            }
-        }
-        .chartXAxis {
-            AxisMarks(values: .stride(by: .date)) { value in
-                AxisValueLabel(format: .dateTime.day().month().year()) // only show year
             }
         }
     }
