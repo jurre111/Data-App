@@ -34,6 +34,12 @@ final class ChartDataModel {
     }
 }
 
+struct AddChartData: Identifiable {
+    var year: Date
+    var value: Double
+    var id = UUID()
+}
+
 struct ContentView: View {
     @Query var charts: [ChartModel]
     @State private var showingAddChartView = false
@@ -85,7 +91,7 @@ struct ContentView: View {
             }
         }
         .sheet(isPresented: $showingAddChartView) {
-            AddChartView()
+            AddChartView(showingAddChartView: $showingAddChartView)
         }
     }
 }
@@ -115,11 +121,49 @@ struct ChartView: View {
 }
 
 struct AddChartView: View {
+    @State private var chartName: String = "Name"
+    @State private var xAxisName: String = "X-axis Name"
+    @State private var yAxisName: String = "Y-axis Name"
+    @State private var data: [AddChartData] = []
+    @Binding var showingAddChartView: Bool
+
     var body: some View {
-        VStack {
-            Spacer()
-            Text("Add Chart View")
-            Spacer()
+        NavigationStack {
+            ScrollView {
+                Form {
+                    Section(header: Text("Chart Details")) {
+                        TextField("Chart Name", text: chartName)
+                        TextField("X-Axis Name", text: xAxisName)
+                        TextField("Y-Axis Name", text: yAxisName)
+                    }
+                    ForEach(data) { point in
+                        Section(header: Text("Data Point")) {
+                            DatePicker("Year", selection: .constant(point.year), displayedComponents: .date)
+                            TextField("Value", value: .constant(point.value), format: .number)
+                                .keyboardType(.decimalPad)
+                        }
+                    }
+                    Button(action: {
+                        data.append(AddChartData(year: Date(), value: 0.0))
+                    }) {
+                        Label("Add Data Point", systemImage: "plus.circle.fill")
+                    }
+                }
+                Spacer()
+            }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("Cancel") {
+                        showingAddChartView.toggle()
+                    }
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Save") {
+                        // save action
+                        showingAddChartView.toggle()
+                    }
+                }
+            }
         }
     }
 }
