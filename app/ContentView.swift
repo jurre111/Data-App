@@ -97,7 +97,7 @@ struct ContentView: View {
 }
 
 struct ChartView: View {
-    var data: [ChartDataModel]
+    var data: [AddChartData]
     var xName: String
     var yName: String
 
@@ -148,7 +148,14 @@ struct AddChartView: View {
                     Label("Add Data Point", systemImage: "plus.circle.fill")
                 }
             }
-            }
+            ChartView(data: data, xName: xAxisName, yName: yAxisName)
+                .frame(height: 300)
+                .padding()
+                .background(
+                    RoundedRectangle(cornerRadius: 20, style: .continuous)
+                        .fill(Color(UIColor.secondarySystemBackground))
+                )
+                .padding()
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Cancel") {
