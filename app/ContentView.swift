@@ -48,6 +48,8 @@ struct ContentView: View {
     @Query var charts: [ChartModel]
     @State private var showingAddChartView = false
     @Environment(\.modelContext) private var modelContext
+    @State private var slope = 1.0
+    @State private var isEditing = false
 
     var body: some View {
         NavigationStack {
@@ -56,6 +58,22 @@ struct ContentView: View {
                     VStack {
                         Spacer()
                         Text("No charts available. Please add a chart.")
+                        Chart {
+                            LinePlot(x: "x", y: "y") { x in
+                                slope*x
+                            }
+                        }
+                        .chartXScale(domain: -10...10)
+                        .chartYScale(domain: -10...10)
+                        .frame(height: 200)
+                        .padding()
+                        Slider(
+                            value: $slope,
+                            in: 0...3,
+                            onEditingChanged: { editing in
+                                isEditing = editing
+                            }
+                        )
                         Spacer()
                     }
                 } else {
