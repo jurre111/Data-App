@@ -119,28 +119,28 @@ struct ContentView: View {
             }
             .padding(.horizontal, 20)
             .navigationTitle("Home")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        showingAddChartView.toggle()
-                    }) {
-                        Image(systemName: "plus")
-                    }
-                    .contextMenu {
-                        Button(action: {
-                            showingAddChartView.toggle()
-                        }) {
-                            Label("Add Chart", systemImage: "plus")
-                        }
-                        Button(action: {
-                            showingAddChartView.toggle()
-                        }) {
-                            Label("Import from...", systemImage: "plus")
-                        }
-                    }
-                }
-            }
-        }
+//            .toolbar {
+//                ToolbarItem(placement: .navigationBarTrailing) {
+//                    Button(action: {
+//                        showingAddChartView.toggle()
+//                    }) {
+//                        Image(systemName: "plus")
+//                    }
+//                    .contextMenu {
+//                        Button(action: {
+//                            showingAddChartView.toggle()
+//                        }) {
+//                            Label("Add Chart", systemImage: "plus")
+//                        }
+//                        Button(action: {
+//                            showingAddChartView.toggle()
+//                        }) {
+//                           Label("Import from...", systemImage: "plus")
+//                        }
+//                    }
+//                }
+//            }
+//        }
         .sheet(isPresented: $showingAddChartView) {
             AddChartView(showingAddChartView: $showingAddChartView)
         }
